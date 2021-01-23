@@ -17,15 +17,14 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          The Best Space Jellyfish store in the World!
         </p>
 
         <ul className={styles.grid}>
           {
             products.map(product => {
               const { title, id, price, description, image } = product;
-              
+
               return (
                 <li className={styles.card} key={ id }>
                   <a href="#">
