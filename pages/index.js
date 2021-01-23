@@ -1,10 +1,16 @@
+
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Link from 'next/Link'
 
-import products from '../products.json'
-import { initiateCheckout } from '../lib/payments'
+import { useCart } from  '../hooks/use-cart'
 
 export default function Home() {
+  const { 
+    addToCart,
+    products,
+  } = useCart();
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,10 +19,6 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Space Jelly Store
-        </h1>
-
         <p className={styles.description}>
           The Best Space Jellyfish store in the World!
         </p>
@@ -28,23 +30,18 @@ export default function Home() {
 
               return (
                 <li className={styles.card} key={ id }>
-                  <a href="#">
-                    <img src={image} alt={ title }></img>
-                    <h3>{ title }</h3>
-                    <p>€{ price }</p>
-                    <p>{ description }</p>
-                  </a>
+                  <Link href={`/products/${id}`}>
+                    <a>
+                      <img src={image} alt={ title }></img>
+                      <h3>{ title }</h3>
+                      <p>€{ price }</p>
+                      <p>{ description }</p>
+                    </a>
+                  </Link>
                   <p>
                     <button className={styles.button} onClick={() => {
-                      initiateCheckout({
-                        lineItems: [
-                          {
-                            price: id,
-                            quantity: 1,
-                          }
-                        ]
-                      });
-                    }}>Buy Now</button>
+                      addToCart({ id })
+                    }}>Add to Cart</button>
                   </p>
                 </li>
               )
